@@ -1,0 +1,19 @@
+html, body {
+    background-color: #add8e6
+}
+
+.tab {
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    margin: 2px 2px 2px 2px;
+    padding: 2px 2px 2px 2px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.video {
+    border: none;
+}
+
+

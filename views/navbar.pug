@@ -1,0 +1,208 @@
+mixin createNavbar(course, student_name, nick_name)
+    style(tyle="text/css").
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #222d32;
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        .sidebar .logo-lg {
+            height: 50px;
+            width: inherit;
+            background: #337ab7;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .iniadicon {
+            height: 26px;
+            width: 26px;
+            margin-left: auto;
+        }
+
+        .sidebar .iniad {
+            font-size: 20px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .sidebar .moocs {
+            font-size: 20px;
+            color: white;
+            font-weight: 300;
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 15px;
+            color: #b8c7ce;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar > div > a:hover {
+            color: #F8F8F8;
+            background: #484848;
+        }
+
+        .sidebar > div > a.active {
+            color: #F8F8F8;
+            background: #484848;
+            border-left: 3px solid #00CCCC;
+        }
+        .sidebar a i, span {
+            color: inherit;
+        }
+
+        .dropdown-lecture {
+            transition: all 0.5s; 
+        }
+
+        .section.active {
+            color: #F8F8F8;
+        }
+
+        a.section:hover {
+            color: #F8F8F8;
+            margin-left: 15px;
+        }
+
+        .togglebtn {
+            cursor: pointer;
+            background-color: inherit;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            display: inline;
+            font-size: 20px;
+        }
+
+        .togglebtn:hover {
+            background-color: #588bae;
+        }
+
+        .main {
+            transition: margin-left .5s;
+        }
+
+        #content-title {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            font-size: 12px;
+            color: #4b646f;
+            background: #1a2226;
+        }
+    span.sidebar#sidebar
+        div.logo-lg
+            span.iniad INIAD
+            img.iniadicon(src="/iniadicon.png")
+            span.moocs MOOCS
+        #content-title TABLE OF CONTENTS
+        - for(let i = 0; i < course["lecture"].length; i++)
+            - var name = course["lecture"][i]["name"]
+            - var lecture = course["lecture"][i]
+            .topic-name
+                a(href="#" style="padding: 10px") 
+                    i.fa.fa-book(style="margin-right: 10px")
+                    span #{" "}#{name}
+                    .dropdown-lecture(style="visibility: hidden; opacity: 0")
+                        - for(let j = 0; j < lecture[name].length; j++)
+                            - var part = lecture[name][j]["part"]
+                            - var section = lecture[name][j]["section"]
+                            - var lname = lecture[name][j]["name"]
+                            - var code = lecture[name][j]["code"]
+                            if section === "-1"
+                                a.section(href=`/courses/livestream?user_id=${user_id}&nick_name=${nick_name}&lecture_code=${code}`)
+                                    span #{part}. #{lname}
+                            else
+                                a.section(href=`/courses/livestream?user_id=${user_id}&nick_name=${nick_name}&lecture_code=${code}`)
+                                    span #{part}.#{section} #{lname}
+        
+    script. 
+        var openedSidebar = false;
+        function toggleNav() {
+          if(openedSidebar === false) {
+            document.getElementById("sidebar").style.width = "380px";
+            var main = document.getElementsByClassName("main");
+            console.log(main.style);
+            for(let i = 0; i < main.length; i++){
+                main[i].style["margin-left"] = "380px";
+            }
+            openedSidebar = true;
+          }
+          else {
+            document.getElementById("sidebar").style.width = "0";
+            var main = document.getElementsByClassName("main");
+            
+            for(let i = 0; i < main.length; i++){
+                main[i].style["margin-left"] = "0";
+            }
+            openedSidebar = false;
+          }
+        }
+    script.
+        function dropdownClicked(evt) {
+            let topic = document.getElementsByClassName("topic-name");
+            for(let i = 0; i < topic.length; i++) {
+                topic[i].getElementsByTagName("a")[0].className = topic[i].getElementsByTagName("a")[0].className.replace("active", "");
+            }
+
+            evt.currentTarget.getElementsByTagName("a")[0].className += " active";
+            let dropdownLecture = evt.currentTarget.getElementsByClassName("dropdown-lecture")[0];
+            if(dropdownLecture.style.visibility == "hidden") {
+                evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].style.height = "0";
+                evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].style.visibility = "visible";
+                evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].style.opacity = "1";
+                // take note of the a[1] not a[0] might be bug in future becase somehow there is a[0]
+                //- evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].getElementsByTagName("a")[1].className += " active";
+                //- evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].getElementsByTagName("a")[1].style["margin-left"] = "15px";
+            }
+            else {
+                evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].style.visibility = "hidden";
+                evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].style.opacity = "0";
+                evt.currentTarget.getElementsByTagName("a")[0].className = evt.currentTarget.getElementsByTagName("a")[0].className.replace("active", "");
+                //evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].getElementsByTagName("a")[1].className = evt.currentTarget.getElementsByClassName("dropdown-lecture")[0].getElementsByTagName("a")[1].style.className.replace(" active", "");
+            }
+            evt.stopPropagation();
+        }
+
+        function sectionClicked(evt) {
+            let section = document.getElementsByClassName("section");
+            for(let i = 0; i < section.length; i++) {
+                section[i].className = section[i].className.replace(" active", "");
+                section[i].style["margin-left"] = "0px";
+            }
+
+            evt.currentTarget.className += " active";
+            evt.currentTarget.style["margin-left"] = "15px";
+
+            evt.stopPropagation();
+        }
+
+        $(document).ready(function() {
+            togglebtn.addEventListener("click", toggleNav);
+            console.log("ready");
+
+            topicName = document.getElementsByClassName("topic-name");
+            for(let i = 0; i < topicName.length;i++) {
+                topicName[i].addEventListener("click", dropdownClicked, false);
+            }
+
+            section = document.getElementsByClassName("section");
+            for(let i = 0; i < section.length; i++) {
+                section[i].addEventListener("click", sectionClicked, false);
+            }
+            
+        });
+
+    

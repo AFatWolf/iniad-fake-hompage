@@ -1,0 +1,34 @@
+doctype html
+
+html(lang='en')
+    head
+        title INIAD ID Manager
+        link(rel="stylesheet" href="login.css" text="text/css")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css")
+   
+    body#body
+        //- Main logo havent been implemented
+        div(style="padding-top: 50px;")
+            img( class="main-logo text-center col-lg-offset-5" src="login-logo.png" id="login-logo" width="283px" height="61px" alt="Login Logo")
+            div(id="welcome") 
+                h1(class="text-center" ) LOGIN TO INIAD ID MANAGER
+            form(id='login-form' method='POST' action='/login')
+                //- label(for="username") Username: 
+                div(class="form-group row")
+                    div(class="col-lg-6 col-lg-offset-3")
+                        input#username(class="form-control input-lg col-lg-10 " name="username" type="text" placeholder="Username" required)
+                br
+                //- label(for="password") Password:
+                div(class="form-group row")
+                    div(class="col-lg-6 col-lg-offset-3")
+                        input#password(class="form-control input-lg col-lg-10" name="password" type="password" placeholder="Password" required)
+                br
+                div(class="move-left row")
+                    div(class="col-lg-6 col-lg-offset-3")
+                        input#remember(type="checkbox" name="loginRemember" checked="unchecked")
+                        label(for="remember") Remeber my username
+                div(class="form-group row")
+                    div(class="col-lg-2 col-lg-offset-5")
+                        button#button-login(class="form-control btn btn-lg col-lg-10") Log in

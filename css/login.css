@@ -1,0 +1,13 @@
+.move-left {
+    width: auto;
+    box-shadow: none;
+}
+
+#body {
+    background-color: #ecf0f5;
+}
+
+#button-login {
+    height: 50px;
+    background: #33CCFF;
+}

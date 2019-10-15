@@ -1,0 +1,297 @@
+doctype html
+html(lang='en')
+    head
+        title #{course_name}
+        meta(charset='utf-8')
+        link(rel="stylesheet" href="/course.css" type="text/css")
+        link(rel="stylesheet" href="/livestream.css" type="text/css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css")
+        link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet")
+        link(href="/emoji-picker/lib/css/emoji.css" rel="stylesheet")
+        link(href="/bootstrap-markdown-editor/dist/css/bootstrap-markdown-editor.css" rel="stylesheet")
+        link(href="/fontawesome-free-5.11.2-web/css/fontawesome.min.css" rel="stylesheet")
+
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+        script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js")
+        script(src="/ace-builds/src-min/ace.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js")
+        script(src="/bootstrap-markdown-editor/dist/js/bootstrap-markdown-editor.js")
+    body
+        include navbar.pug
+        +createNavbar(course, student_name, nick_name)
+        .main
+            include header.pug
+            +createHeader(student_name, account)
+            .tab-list.row#sections
+                button.col-lg-3.tablinks#defaultOpen(onclick="openTab(event, 'Livestream')") Livestream
+                button.col-lg-3.tablinks(onclick="openTab(event, 'Review')") Review
+                button.col-lg-3.tablinks(onclick="openTab(event, 'Notes')") Notes
+                button.col-lg-3.tablinks(onclick="openTab(event, 'Q&A')") Q & A
+                //- a.col-lg-2.col-lg-offset-2.tab(href=`livestream?user_id=${user_id}`) Livestream
+                //- a.col-lg-2.tab(href=`review?user_id=${user_id}`) Review
+                //- a.col-lg-2.tab(href=`note?user_id=${user_id}`) Notes
+                //- a.col-lg-2.tab(href=`qa?user_id=${user_id}`) Q & A
+            .tabcontent#Livestream
+                p 
+                .container-fluid
+                    .row
+                        .col-lg-8.col-md-12(style="float: left;")
+                            .container-fluid
+                                .row
+                                    iframe.col-lg-12.col-lg-offset-1.center.video(align="middle" src=`${video_link}` alt=`${course_name}` height="500px")
+                                    br
+                                .row
+                                    input.col-lg-12.z-depth-3#comment(placeholder="Comment" width="100%" height="50px" data-emoji-input="unicode" rows="1")
+                                    //- p.col-lg-offset-1.media-top#before-comment Add a comment:
+                                    //- input.col-lg-10.col-lg-offset-1.media-bottom#comment(placeholder="Comment" width="100%" height="100px" data-emoji-input="unicode")
+                                    //- p.lead.emoji-picker-container
+                                    //-     input.emojiable_selector(type="text" data-emojiable="converted" data-type="original-input" placeholder="Comment")
+                        .note.col-lg-4.col-md-12#note-livestream(style="float:right;")
+                            textarea(name="text" id="editor-livestream" placeholder="Notes")
+                            .container-fluid
+                                .row
+                                    .col-lg-6.savebtn#livestream-save-btn
+                                        button Save
+                                    .col-lg-6.upload-btn
+                                        button Upload
+            .tabcontent#Review
+                p 
+                .container-fluid
+                    .row
+                        .col-lg-8.col-md-12
+                            .container-fluid
+                                .row
+                                    iframe.col-lg-12.center.video(src=`${video_link}` alt=`${course_name}` height="500px")
+                                    br
+                                    //- textarea.col-lg-12.media-bottom#comment(placeholder="Comment" width="100%" height="50px" data-emoji-input="unicode")
+                                    //- p.col-lg-offset-1.media-top#before-comment Add a comment:
+                                    //- p.lead.emoji-picker-container
+                                    //-     input.emojiable_selector(type="text" data-emojiable="converted" data-type="original-input" placeholder="Comment")
+                        note.col-lg-4.col-md-12#note-review
+                            textarea(name="text" id="editor-review" placeholder="Notes")
+                            .container-fluid
+                                .row
+                                    .col-lg-6.save-btn#review-save-btn
+                                        button Save
+                                    .col-lg-6.upload-btn
+                                        button Upload
+            .tabcontent#Notes
+                .container-fluid
+                    .row
+                    .col-lg-5
+                        table.table.table-hover#list-note
+                            thead
+                                tr
+                                    th #
+                                    th Name
+                                    th Thumbs up
+                            tbody#list-note-body
+                            //- gonna add dynamically
+                            //- - for(let i = 1; i <= 10; i++)
+                                
+                            //-     tr(class=`list-row` onclick="openNote(event)")
+                            //-         td.list-order #{ }
+                            //-         td.list-name #{ }
+                            //-         td.list-thumbs-up #{ } 
+                        //- - for(let i = 1; i <= 6; i++)
+                        //-     span(class=`list-page`) #{i}
+                    .col-lg-7
+                        #note-view
+            .tabcontent#QA
+            script(src="/emoji-picker/lib/js/config.js")
+            script(src="/emoji-picker/lib/js/util.js")
+            script(src="/emoji-picker/lib/js/jquery.emojiarea.js")
+            script(src="/emoji-picker/lib/js/emoji-picker.js")    
+            script.
+                var course_data;
+                var code;
+                $(document).ready( () => {
+                    $('#editor-livestream').markdownEditor({
+                        height: 475,
+                        preview: true,
+                        onPreview: function (content, callback) {
+                            callback( marked(content) );
+                        }
+                    });
+                    $('#editor-review').markdownEditor({
+                        height: 400,
+                        preview: true,
+                        onPreview: function (content, callback) {
+                            callback( marked(content) );
+                        }
+                    });
+
+                    var md_editor = $.find('.md-editor');
+                    for(let i = 0; i < md_editor.length; i++){
+                        var b = ace.edit(md_editor[i]);
+                        b.setValue(`!{notetext}`, 1);
+                    }
+
+                    // tab setup
+                    let tabcontent;
+                    tabcontent = document.getElementsByClassName("tabContent");
+                    for(let i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.visibility = "hidden";
+                    }
+                    document.getElementById("defaultOpen").click();
+
+                    // savenote setup
+                    document.getElementById("livestream-save-btn").addEventListener("click", (evt) => {
+                        saveNote(evt, "editor-livestream", "note-livestream");
+                    });
+                    document.getElementById("review-save-btn").addEventListener("click", (evt) => {
+                        saveNote(evt, "editor-review", "note-review");
+                    })
+                    // get course data in data form
+                    course_data = JSON.parse(`!{course_data}`);
+                    
+                });
+                $(function() {
+                    // Initializes and creates emoji set from sprite sheet
+                    window.emojiPicker = new EmojiPicker({
+                    emojiable_selector: '[data-emojiable=true]',
+                    assetsPath: '/emoji-picker/lib/img/',
+                    popupButtonClasses: 'fa fa-smile-o'
+                    });
+                    // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+                    // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+                    // It can be called as many times as necessary; previously converted input fields will not be converted again
+                    window.emojiPicker.discover();
+                });
+                function openTab(evt, tabName) {
+                    let tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for(let i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.visibility = "hidden";
+                        tabcontent[i].style.opacity = "0";
+                        tabcontent[i].style.display = "none";
+                    }
+
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for(let i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+
+                    document.getElementById(tabName).style.visibility = "visible";
+                    document.getElementById(tabName).style.opacity = "1";
+                    document.getElementById(tabName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                    if(tabName == "Notes") {
+                        console.log("yea it did");
+                        changePage(1);
+                    }
+                }
+                // .tabcontent#Notes 
+                var currentPage = 1;
+                function changePage(page) {
+                    let min = (page - 1) * 10 + 1;
+                    let max = min + 6;
+                    let code = "#{lecture_code}".split(",");
+                    let name = course_data["lecture"][parseInt(code[0])]["name"];
+                    let note = course_data["lecture"][parseInt(code[0])][name][parseInt(code[1])]["note"];  
+                    console.log("This is note list: ", note);
+                    let listNote = $("#list-note-body");
+                    listNote.empty();
+                    for(let i = 0; ; i++) {
+                        let order = min + i;
+                        if(order <= note.length) {
+                            listNote.append(`
+                                        <tr onclick="openNote(event)"> 
+                                            <td class="list-order">${order}</td>
+                                            <td class="list-name">${note[order - 1]["user_id"]}</td>
+                                            <td class="list-thumbs-up">${note[order - 1]["thumbsup"]}</td>
+                                        </tr>
+                            `);
+                        }
+                        else 
+                            break;
+                    }
+                    if(page == currentPage)
+                        return;
+
+                    for(let i = 0;i < listPage.length;i++){
+                        let curNumber = listPage[i].textContent;
+                        listPage[i].textContent = parseInt(curNumber) + (page - currentPage);
+                    }
+
+                    currentPage = page;
+
+                    //- let listOrder = document.getElementsByClassName("list-order");
+                    //- let listName = document.getElementsByClassName("list-name");
+                    //- let listThumbsUp = document.getElementsByClassName("list-thumbs-up");
+                    //- let listPage = document.getElementsByClassName("list-page");
+                    
+                    //- console.log("This is course_data: ", course_data);
+                    
+                    //- console.log(code);
+                    //- console.log(name);
+                    //- console.log(note[0]);
+                    //- for(let i = 0; i < listOrder.length; i++) {
+                    //-     let order = min + i;
+                    //-     console.log("Order: ", order);
+                    //-     if(order <= note.length){
+                    //-         listOrder[i].textContent = order;
+                    //-         listName[i].textContent = note[order - 1]["user_id"];
+                    //-         listThumbsUp[i].textContent = note[order - 1]["thumbsup"];
+                    //-     }
+                    //- }
+                }
+                function openNote(evt) {
+                    let name = evt.currentTarget.getElementsByClassName("list-name")[0].textContent;
+                    console.log(name);
+                    let xhttp = new XMLHttpRequest();
+                    let note;
+                    xhttp.onreadystatechange = () => {
+                        if(xhttp.readyState == 4) {
+                            if(xhttp.status == 200) {
+                                console.log("This is response: ", xhttp.responseText);
+                                $("#note-view").empty();
+                                $("#note-view").append(xhttp.responseText);
+                            }
+                        }
+                    }
+                    console.log("Request to: ", `/course/livestream/getnote?user_id=#{user_id}&nick_name=#{nick_name}&lecture_code=#{lecture_code}`);
+                    xhttp.open("GET", `/course/livestream/getnote?user_id=${name}&nick_name=#{nick_name}&lecture_code=#{lecture_code}`, true);
+                    xhttp.send();
+                }
+
+                function saveNote(evt, editorId, noteId) {
+                    // vl . php
+                    let  text = "";
+                    if(editorId === "editor-livestream")
+                        text = ace.edit($.find(".md-editor")[0]).getSession().getValue();
+                    else if(editorId === "editor-review")
+                        text = ace.edit($.find(".md-editor")[1]).getSession().getValue();
+                    let xhttp = new XMLHttpRequest();
+                    let data = {
+                        "notetext": text,
+                        "user_id": "#{user_id}",
+                        "nick_name": "#{nick_name}",
+                        "lecture_code": "#{lecture_code}"
+                    }
+                    xhttp.onreadystatechange = () => {
+                        if(xhttp.readyState == 4) {
+                            if(xhttp.status == 200)
+                                alert("Your note has been saved successfully!");
+                            else
+                                alert("Unable to save your notes. Try again nextime!")
+                        }
+                    }
+                    console.log(JSON.stringify(data));
+                    xhttp.open("POST", `/course/livestream/savenote`);
+                    xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+                    xhttp.send(JSON.stringify(data));
+                    // set text to both livestream and review editor
+                    var md_editor = $.find('.md-editor');
+                    for(let i = 0; i < md_editor.length; i++){
+                        var b = ace.edit(md_editor[i]);
+                        b.setValue(text, 1);
+                    }
+                }
+            script. 
+
+        

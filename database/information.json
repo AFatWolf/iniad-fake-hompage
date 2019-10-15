@@ -1,0 +1,20 @@
+{
+    "courses":[
+        {
+            "nick_name": "ITIE1",
+            "name": "Introduction to Engineer"
+        },
+        {
+            "nick_name": "ITCSEI",
+            "name": "Introduction to Computer Science and Exercise 1"
+        },
+        {
+            "nick_name": "ITCS",
+            "name": "Introduction to Computer and Society"
+        },
+        {
+            "nick_name": "CA",
+            "name": "Computer Architecture"
+        }
+    ]
+}

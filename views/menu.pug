@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+head
+    title Menu
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js")
+    link(rel="stylesheet" href="menu.css" type="text/css")
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet")
+body
+    include navbar.pug
+    //- +createNavbar
+    .main
+        include header.pug
+        +createHeader(student_name, account)
+        mixin course(name, nick_name)
+            div(class="col-lg-4 col-sm-5 col-xs-12 well")
+                //-.cell
+                .media
+                    .media-left.media-middle
+                        img(class="course-list-icon ml-0 media-object" src=`courses/${nick_name}.png`)
+                    .media-body
+                        .media-heading #{name}
+                            div(class=`${nick_name}`) #{nick_name}
+                        a(class="btn btn-primary mt-1 course-list-icon" href=`/courses/livestream?user_id=${user_id}&nick_name=${nick_name}`) View courses
+                            i(class="fa fa-play-circle" style="margin-left: 5px;") 
+                            
+        div(id="profile")
+        .row-space(style="padding-left: 5px;")
+            h1(style="font-weight: 500; font-size: 24px;") List of Courses
+            div.below-title 
+                i(class="fa fa-dashboard")
+                span(style="margin-left: 5px;") 2019
+        - for(let i = 0; i < courses_name.length; i+=3)
+            div.row-space
+                .container-fluid
+                    .row.row-eq-height
+                        +course(courses_name[i].name, courses_name[i].nick_name)
+                        if(i + 1 < courses_name.length)
+                            +course(courses_name[i + 1].name, courses_name[i + 1].nick_name)
+                        if(i + 2 < courses_name.length)
+                            +course(courses_name[i + 2].name, courses_name[i + 2].nick_name)
+

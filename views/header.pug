@@ -1,0 +1,66 @@
+mixin createHeader(student_name, account)
+    style(type="text/css").
+        #header {
+            height: 50px;
+            width: 100%;
+            display: flex;
+            background-color: #3c8dbc;
+        }
+        #student-name{
+            float: right;
+            color: white;
+            font-size: 14px;
+            margin-left: 2px;
+        }
+        .user-image{
+            height: 100%;
+            width: 25px;
+            float: right;
+            border-radius: 50%;
+            margin-right: 2px;
+        }
+        .user-dropdown-image {
+            height: 40px;
+            width: 40px;
+        }
+        .center {
+            display: block;
+            margin-left:auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        #student-settings {
+            margin-right: 5px;
+            margin-left: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: inline;
+        }
+
+        #student-settings:hover {
+            background-color: #588bae;
+        }
+        
+        #settings-a {
+            display: inline;
+            float: left;
+        }
+        #logout-a {
+            display: inline;
+            float: right;
+        }
+    div#header
+        a.togglebtn#togglebtn &#9776;
+        .dropdown#student-settings
+            a.btn.dropdown-toggle(data-toggle="dropdown" type="button")
+                span#student-name #{student_name}
+                img.user-image(src="/toyo-logo.jpg" alt="Toyo Logo")
+            ul.dropdown-menu.pull-right(style="width: 100px;")
+                li.user-dropdown-image.center
+                    img.user-dropdown-image(src="/toyo-logo.jpg" alt="Toyo Logo")
+                li.center(disabled="true")
+                    p #{account}
+                li#settings-a(style="width: 100%;")
+                    a.btn Settings
+                li#logout-a(style="width: 100%;")
+                    a.btn(href="/logout") Logout
