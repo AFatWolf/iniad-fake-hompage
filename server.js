@@ -1,3 +1,4 @@
+const PORT = process.env.PORT || 8080;
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -207,6 +208,6 @@ app.post('/course/livestream/mdconvert', (req, res) => {
     res.status(200).send(note_html);
 })
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
     console.log('Listening');
 })
