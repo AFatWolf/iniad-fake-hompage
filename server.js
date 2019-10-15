@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -127,6 +127,7 @@ app.get('/courses/livestream', (req, res) => {
         let code = req.query.lecture_code.split(",");
         console.log("------Code is: " ,code);
         let lecture = course_database[req.query.nick_name].getLecture(code);
+        let lecture_name = course_database[req.query.nick_name].getLectureName(code);
         res.render('livestream.pug', {
             student_name: user.getName(),
             account: req.query.user_id,
@@ -137,11 +138,13 @@ app.get('/courses/livestream', (req, res) => {
             video_link: lecture.video_link,
             lecture: lecture,
             lecture_code: req.query.lecture_code,
+            lecture_name: lecture_name,
             notetext: user.getNote(req.query.nick_name, req.query.lecture_code)
         });
     }
     else {
         let lecture = course_database[req.query.nick_name].getLecture(["0", "0"]);
+        let lecture_name = course_database[req.query.nick_name].getLectureName(["0", "0"]);
         res.render('livestream.pug', {
             student_name: user.getName(),
             account: req.query.user_id,
@@ -152,6 +155,7 @@ app.get('/courses/livestream', (req, res) => {
             video_link:lecture.video_link,
             lecture: lecture,
             lecture_code: "0,0",
+            lecture_name: lecture_name,
             notetext: user.getNote(req.query.nick_name, "0,0")
         });
     }
@@ -170,6 +174,26 @@ app.post('/course/livestream/savenote', (req, res)=> {
     else {
         console.log("Note received: ", notetext);
         let returnValue = database[user_id].saveNote(notetext, nick_name, lecture_code);
+        if(returnValue === "error")
+            res.status(200).send("error");
+        else
+            res.status(200).send(returnValue);
+    }
+});
+
+app.post('/course/livestream/uploadnote', (req, res)=> {
+    console.log(req.body);
+    let notetext = req.body["notetext"];
+    let user_id = req.body.user_id;
+    let nick_name = req.body.nick_name;
+    let lecture_code = req.body.lecture_code;
+    if(!(user_id in database)) {
+        res.status(200).send("error");
+    }
+    else {
+        console.log("Note received: ", notetext);
+        let returnValue = database[user_id].saveNote(notetext, nick_name, lecture_code);
+        course_database[nick_name].updateData(user_id, lecture_code);
         if(returnValue === "error")
             res.status(200).send("error");
         else
@@ -211,3 +235,5 @@ app.post('/course/livestream/mdconvert', (req, res) => {
 app.listen(PORT, () => {
     console.log('Listening');
 })
+
+// you gonna need this someday: https://appdividend.com/2018/04/14/how-to-deploy-nodejs-app-to-heroku/#Step_3_Run_the_application_in_local

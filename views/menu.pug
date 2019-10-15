@@ -22,9 +22,12 @@ body
                     .media-body
                         .media-heading #{name}
                             div(class=`${nick_name}`) #{nick_name}
-                        a(class="btn btn-primary mt-1 course-list-icon" href=`/courses/livestream?user_id=${user_id}&nick_name=${nick_name}`) View courses
-                            i(class="fa fa-play-circle" style="margin-left: 5px;") 
-                            
+                        if nick_name === "ITIE1"
+                            a(class="btn btn-primary mt-1 course-list-icon course-view-btn" href=`/courses/livestream?user_id=${user_id}&nick_name=${nick_name}`) View courses
+                                i(class="fa fa-play-circle" style="margin-left: 5px;") 
+                        else
+                            a(class="btn btn-primary mt-1 course-list-icon course-view-btn" href=`/courses/livestream?user_id=${user_id}&nick_name=${nick_name}` disabled="true") View courses
+                                i(class="fa fa-play-circle" style="margin-left: 5px;") 
         div(id="profile")
         .row-space(style="padding-left: 5px;")
             h1(style="font-weight: 500; font-size: 24px;") List of Courses
@@ -40,4 +43,9 @@ body
                             +course(courses_name[i + 1].name, courses_name[i + 1].nick_name)
                         if(i + 2 < courses_name.length)
                             +course(courses_name[i + 2].name, courses_name[i + 2].nick_name)
-
+        script. 
+            $(document).ready(() => {
+                let courseViewBtn = document.getElementsByClassName("course-view-btn");
+                for(let i = 1; i < courseViewBtn.length; i++)
+                    courseViewBtn[i].disabled = "true";
+            })

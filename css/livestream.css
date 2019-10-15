@@ -11,9 +11,9 @@
 }
 
 #comment {
-    border: 1px solid black;
+    border: 1px solid #C8C8C8;
     border-radius: 15px;
-    margin-top: 5px;
+    margin-top: 20px;
     font-size:20px;
 }
 
@@ -75,4 +75,37 @@
 
 iframe#media-top {
     justify-content: center;
+}
+
+.savebtn, .upload-btn {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    width: inherit;
+    margin-left: auto;
+    text-align: center;
+    height: 30px;
+    border-left: 1px solid 	#909090;
+    border-bottom: 1px solid #909090;
+    border-top: 1px solid #909090;
+}
+
+.upload-btn {
+    border-right: 1px solid #909090;
+}
+
+.note-btn {
+    overflow: hidden;
+    background: #F0F0F0;
+    display: block;
+}
+
+.note-btn span {
+    padding-top: 20px;
+    display: inline block;
+}
+
+.note-btn div:hover {
+    background: #b8c7ce;
+    color: #0066CC;
 }

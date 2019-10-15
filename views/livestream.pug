@@ -27,6 +27,7 @@ html(lang='en')
         .main
             include header.pug
             +createHeader(student_name, account)
+            div(style="margin-left: 20px; margin-top: 30px; margin-bottom: 30px; font-weight: 300; font-size: 30px;") #{lecture.name}
             .tab-list.row#sections
                 button.col-lg-3.tablinks#defaultOpen(onclick="openTab(event, 'Livestream')") Livestream
                 button.col-lg-3.tablinks(onclick="openTab(event, 'Review')") Review
@@ -54,11 +55,11 @@ html(lang='en')
                         .note.col-lg-4.col-md-12#note-livestream(style="float:right;")
                             textarea(name="text" id="editor-livestream" placeholder="Notes")
                             .container-fluid
-                                .row
-                                    .col-lg-6.savebtn#livestream-save-btn
-                                        button Save
-                                    .col-lg-6.upload-btn
-                                        button Upload
+                                .row.note-btn
+                                    div.savebtn#livestream-save-btn.col-lg-6
+                                        span Save
+                                    div.col-lg-6.upload-btn#livestream-upload-btn
+                                        span Upload
             .tabcontent#Review
                 p 
                 .container-fluid
@@ -75,11 +76,11 @@ html(lang='en')
                         note.col-lg-4.col-md-12#note-review
                             textarea(name="text" id="editor-review" placeholder="Notes")
                             .container-fluid
-                                .row
-                                    .col-lg-6.save-btn#review-save-btn
-                                        button Save
-                                    .col-lg-6.upload-btn
-                                        button Upload
+                                .row.note-btn
+                                    div.savebtn#review-save-btn.col-lg-6
+                                        span Save
+                                    div.col-lg-6.upload-btn#review-upload-btn
+                                        span Upload
             .tabcontent#Notes
                 .container-fluid
                     .row
@@ -91,15 +92,6 @@ html(lang='en')
                                     th Name
                                     th Thumbs up
                             tbody#list-note-body
-                            //- gonna add dynamically
-                            //- - for(let i = 1; i <= 10; i++)
-                                
-                            //-     tr(class=`list-row` onclick="openNote(event)")
-                            //-         td.list-order #{ }
-                            //-         td.list-name #{ }
-                            //-         td.list-thumbs-up #{ } 
-                        //- - for(let i = 1; i <= 6; i++)
-                        //-     span(class=`list-page`) #{i}
                     .col-lg-7
                         #note-view
             .tabcontent#QA()
@@ -149,6 +141,12 @@ html(lang='en')
                     });
                     document.getElementById("review-save-btn").addEventListener("click", (evt) => {
                         saveNote(evt, "editor-review", "note-review");
+                    });
+                    document.getElementById("livestream-upload-btn").addEventListener("click", (evt) => {
+                        uploadNote(evt, "editor-livestream");
+                    });
+                    document.getElementById("review-upload-btn").addEventListener("click", (evt) => {
+                        uploadNote(evt, "editor-review");
                     })
                     // get course data in data form
                     course_data = JSON.parse(`!{course_data}`);
@@ -223,26 +221,6 @@ html(lang='en')
                     }
 
                     currentPage = page;
-
-                    //- let listOrder = document.getElementsByClassName("list-order");
-                    //- let listName = document.getElementsByClassName("list-name");
-                    //- let listThumbsUp = document.getElementsByClassName("list-thumbs-up");
-                    //- let listPage = document.getElementsByClassName("list-page");
-                    
-                    //- console.log("This is course_data: ", course_data);
-                    
-                    //- console.log(code);
-                    //- console.log(name);
-                    //- console.log(note[0]);
-                    //- for(let i = 0; i < listOrder.length; i++) {
-                    //-     let order = min + i;
-                    //-     console.log("Order: ", order);
-                    //-     if(order <= note.length){
-                    //-         listOrder[i].textContent = order;
-                    //-         listName[i].textContent = note[order - 1]["user_id"];
-                    //-         listThumbsUp[i].textContent = note[order - 1]["thumbsup"];
-                    //-     }
-                    //- }
                 }
                 function openNote(evt) {
                     let name = evt.currentTarget.getElementsByClassName("list-name")[0].textContent;
@@ -295,6 +273,36 @@ html(lang='en')
                         var b = ace.edit(md_editor[i]);
                         b.setValue(text, 1);
                     }
+                }
+
+                function uploadNote(evt, editorId) {
+                    console.log("Hey this is upload note!");
+                    let xhttp = new XMLHttpRequest();
+                    let  text = "";
+                    if(editorId === "editor-livestream")
+                        text = ace.edit($.find(".md-editor")[0]).getSession().getValue();
+                    else if(editorId === "editor-review")
+                        text = ace.edit($.find(".md-editor")[1]).getSession().getValue();
+
+                    let data = {
+                        "notetext": text,
+                        "user_id": "#{user_id}",
+                        "nick_name": "#{nick_name}",
+                        "lecture_code": "#{lecture_code}"
+                    }
+                    xhttp.onreadystatechange = () => {
+                        if(xhttp.readyState == 4) {
+                            if(xhttp.status == 200) {
+                                alert("Upload successfully!");
+                            }
+                            else {
+                                alert("Unable to upload! Check your connection and try again!");
+                            }
+                        }
+                    }
+                    xhttp.open("POST", `/course/livestream/uploadnote`);
+                    xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+                    xhttp.send(JSON.stringify(data));
                 }
             script. 
 
