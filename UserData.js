@@ -41,6 +41,15 @@ class userData {
             });
             notetext = "";
         }
+
+        for(let i = 0; i < notetext.length; i++) {
+            console.log(i);
+            if(notetext[i] === "`" || notetext[i] === "'" || notetext[i] === '"') {
+                notetext = notetext.slice(0,i) + "\\" + notetext[i] + notetext.slice(i+1);
+                i += 1;
+            }
+        }
+        console.log("Notetext after escaping: ", notetext);
         return notetext;
     }
 }
