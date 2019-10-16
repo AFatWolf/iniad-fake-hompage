@@ -35,7 +35,12 @@ class courseData {
         
         if(code.length !== 2)
             return null;
+
         let name = this.data.lecture[parseInt(code[0])].name;
+        for(let i = 0; i < this.data.lecture[parseInt(code[0])][name][parseInt(code[1])]["note"].length; i++) {
+            if(this.data.lecture[parseInt(code[0])][name][parseInt(code[1])]["note"][i].user_id == user_id)
+                return false;
+        }
         this.data.lecture[parseInt(code[0])][name][parseInt(code[1])]["note"].push({
             user_id: user_id,
             thumbsup: 0,

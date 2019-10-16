@@ -1,1 +1,40 @@
-{"lecture":[{"name":"Introduction to INIAD: Engineer","Introduction to INIAD: Engineer":[{"part":"1","section":"-1","name":"Operating System and Embedded System","video_link":"https://www.youtube.com/embed/NYTK65RrjnE","code":"0,0","note":[{"user_id":"1","thumbsup":"1","thumbsup_person":{"1":1}},{"user_id":"2","thumbsup":"0","thumbsup_person":{}},{"user_id":"1F101910016","thumbsup":0,"thumbsup_person":{}},{"user_id":"1F101910016","thumbsup":0,"thumbsup_person":{}}]},{"part":"2","section":"-1","name":"Programming Languages","video_link":"https://www.youtube.com/embed/EbNJ05EVXs0","code":"0,1","note":[{"user_id":"1","thumbsup":"0","thumbsup_person":{"1":1}}]}]}]}
+{
+    "lecture": [{
+        "name": "Introduction to INIAD: Engineer",
+        "Introduction to INIAD: Engineer": [{
+            "part": "1",
+            "section": "-1",
+            "name": "Operating System and Embedded System",
+            "video_link": "https://www.youtube.com/embed/NYTK65RrjnE",
+            "code": "0,0",
+            "note": [{
+                "user_id": "1",
+                "thumbsup": "1",
+                "thumbsup_person": {
+                    "1": 1
+                }
+            }, {
+                "user_id": "2",
+                "thumbsup": "0",
+                "thumbsup_person": {}
+            }, {
+                "user_id": "1F101910016",
+                "thumbsup": 0,
+                "thumbsup_person": {}
+            }]
+        }, {
+            "part": "2",
+            "section": "-1",
+            "name": "Programming Languages",
+            "video_link": "https://www.youtube.com/embed/EbNJ05EVXs0",
+            "code": "0,1",
+            "note": [{
+                "user_id": "1",
+                "thumbsup": "0",
+                "thumbsup_person": {
+                    "1": 1
+                }
+            }]
+        }]
+    }]
+}
