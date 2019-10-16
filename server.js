@@ -219,9 +219,11 @@ app.get('/course/livestream/getnote', (req, res) => {
             simpleLineBreaks: true,
             emoji: true
         });
+        returnValue = returnValue.replace(new RegExp("\\\\", "g"), "");
+        console.log("After unescaping: ", returnValue);
         let note_html = converter.makeHtml(returnValue);
         res.status(200).send(note_html);
-        console.log("Return for getnote: ", converter.makeHtml("# I1"));
+        console.log("Return for getnote: ", note_html);
     }
 });
 

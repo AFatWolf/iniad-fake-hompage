@@ -1,3 +1,17 @@
 # Interupt
-1. Not some thing I know
-2. Not some thing I should know
+*Definition*: is a signal interupting from
+  + a hardware
+  + a software
+
+### 1. Hardware intterupt
+|Demonstrating &nbsp; &nbsp;|Row &nbsp;|Only|
+|---|:--:|---:|
+|CPU|1|test|
+|keyboard|2|only|
+
+### 2. Software interupt
+Make `code` look differently:  
+```
+var a = "Hello";
+print(a)
+```

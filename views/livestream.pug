@@ -236,8 +236,8 @@ html(lang='en')
                             }
                         }
                     }
-                    console.log("Request to: ", `/course/livestream/getnote?user_id=#{user_id}&nick_name=#{nick_name}&lecture_code=#{lecture_code}`);
-                    xhttp.open("GET", `/course/livestream/getnote?user_id=${name}&nick_name=#{nick_name}&lecture_code=#{lecture_code}`, true);
+                    console.log("Request to: ", `/course/livestream/getnote?user_id=${name}&nick_name=#{nick_name}&lecture_code=#{lecture_code}` + `&rand=${Math.random()}`);
+                    xhttp.open("GET", `/course/livestream/getnote?user_id=${name}&nick_name=#{nick_name}&lecture_code=#{lecture_code}` + `&rand=${Math.random()}`, true);
                     xhttp.send();
                 }
 
@@ -304,6 +304,8 @@ html(lang='en')
                     xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
                     xhttp.send(JSON.stringify(data));
                 }
+
+                
             script. 
 
         
